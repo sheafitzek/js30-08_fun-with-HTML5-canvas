@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<title>Playing with HTML5 Canvas</title>
+		<meta name="description" content="A Drawing App Built on HTML5 Canvas">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="shortcut icon" type="image/x-icon" href="media/images/paint.ico" />
+
+		<!-- <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
+
+		<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bellefair|Rakkas|Share"> -->
+
+		<!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
+
+		<link rel="stylesheet" href="css/index.css">
+
+	</head>
+
+	<body>
+
+		<header class="main-header">
+			<nav>
+			</nav>
+		</header>
+
+		<main class="main-grid">
+
+			<form id="controls">
+
+				<div class="form form-select">
+					<p>Context</p>
+					<select name="context" form="controls" size="1" required>
+						<option value="2d">2d</option>
+						<option value="webgl">webgl</option>
+					</select>
+				</div>
+
+				<!-- line width (slider & text input) -->
+				<div class="form range-slider">
+					<p>Line Width</p>
+					<input class="range-slider-range" name="line-width" form="controls" type="range" list="tickmarks" min="1" max="100" step="1">
+						<!--<datalist id="tickmarks">
+							<option value="1" label="0px">
+							<option value="10">
+							<option value="20">
+							<option value="30">
+							<option value="40">
+							<option value="50" label="50px">
+							<option value="60">
+							<option value="70">
+							<option value="80">
+							<option value="90">
+							<option value="100" label="100px">
+						</datalist>-->
+					<span class="range-slider-value">1</span>
+				</div>
+
+					<!-- stroke style (checkbox for gradient) -->
+
+				<div class="form form-select">
+					<p>Line Join</p>
+					<select name="line-join" form="controls" required>
+						<option value="bevel">bevel</option>
+						<option value="round">round</option>
+						<option value="miter">miter</option>
+					</select>
+				</div>
+
+				<!-- miter limit (slider & text input) -->
+				<div class="form range-slider">
+					<p>Miter Limit</p>
+					<input class="range-slider-range" name="miter-limit" form="controls" type="range" list="tickmarks" min="1" max="100" step="1">
+						<!--<datalist id="tickmarks">
+							<option value="1" label="0px">
+							<option value="10">
+							<option value="20">
+							<option value="30">
+							<option value="40">
+							<option value="50" label="50px">
+							<option value="60">
+							<option value="70">
+							<option value="80">
+							<option value="90">
+							<option value="100" label="100px">
+						</datalist>-->
+					<span class="range-slider-value">10</span>
+				</div>
+
+				<div class="form form-select">
+					<p>Line Cap</p>
+					<select name="line-cap" form="controls" required>
+						<option value="butt">butt</option>
+						<option value="round">round</option>
+						<option value="square">square</option>
+					</select>
+				</div>
+
+				<div class="form form-select">
+					<p>Composite</p>
+					<select name="global-composite-operation" form="controls" required>
+						<option value="source-over">source-over</option>
+						<option value="source-atop">source-atop</option>
+						<option value="source-in">source-in</option>
+						<option value="source-out">source-out</option>
+						<option value="destination-over">destination-over</option>
+						<option value="destination-atop">destination-atop</option>
+						<option value="destination-in">destination-in</option>
+						<option value="destination-out">destination-out</option>
+						<option value="lighter">lighter</option>
+						<option value="copy">copy</option>
+						<option value="xor">xor</option>
+					</select>
+				</div>
+
+			</form>
+
+			<canvas class="draw" width="800" height="800"></canvas>
+
+		</main>
+
+		<footer class="main-footer">
+		</footer>
+
+		<script type="text/javascript" src="js/index.js"></script>
+
+	</body>
+
+</html>
