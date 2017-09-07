@@ -1,23 +1,37 @@
 const app = {
+	// rangeSlider() {
+	// 	const ranges = [...document.querySelectorAll(`.form-range`)];
+	// 	const sliders = [...document.querySelectorAll(`.form-range__slider`)];
+	// 	const values = [...document.querySelectorAll(`.form-range__slider-value`)];
+
+	// 	ranges.forEach(()=> {
+	// 		values.forEach((value)=> {
+	// 			const prevVal = value.previousElementSibling.value;
+
+	// 			value.innerHTML = prevVal;
+	// 		});
+
+	// 		sliders.forEach((slider)=> {
+	// 			addEventListener(`input`, ()=> {
+	// 				const nextVal = slider.nextElementSibling;
+
+	// 				nextVal.innerHTML = slider.value;
+	// 			});
+	// 		});
+	// 	});
+	// },
+
 	rangeSlider() {
-		const slider = [...document.querySelectorAll(`.range-slider`)];
-		const range = [...document.querySelectorAll(`.range-slider-range`)];
-		const value = [...document.querySelectorAll(`.range-slider-value`)];
+		const ranges = [...document.querySelectorAll(`.form-range`)];
 
-		slider.forEach((sliderElem)=> {
-			value.forEach((valElem)=> {
-				const prevVal = valElem.previousElementSibling.value;
+		ranges.forEach((range)=> {
+			const rangeValue = range.querySelector(`.form-range span`);
+			const rangeSlider = range.querySelector(`[type="range"]`);
 
-				valElem.innerHTML = prevVal;
-			});
+			rangeValue.innerHTML = rangeSlider.value;
 
-			range.forEach((rangeElem, index, array)=> {
-				addEventListener(`input`, ()=> {
-					const nextVal = rangeElem.nextElementSibling;
-
-					nextVal.innerHTML = rangeElem.value;
-				// this.nextElementSibling.value.innerHTML(this.value);
-				});
+			rangeSlider.addEventListener(`input`, ()=> {
+				rangeValue.innerHTML = rangeSlider.value;
 			});
 		});
 	},

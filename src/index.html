@@ -33,18 +33,19 @@
 			<form id="controls">
 
 				<div class="form form-select">
-					<p>Context</p>
-					<select name="context" form="controls" size="1" required>
+					<!--<p>Context</p>-->
+					<label>Context:</label>
+					<select form="controls" name="context" value="2d" size="1" required>
 						<option value="2d">2d</option>
 						<option value="webgl">webgl</option>
 					</select>
 				</div>
 
 				<!-- line width (slider & text input) -->
-				<div class="form range-slider">
-					<p>Line Width</p>
-					<input class="range-slider-range" name="line-width" form="controls" type="range" list="tickmarks" min="1" max="100" step="1">
-						<!--<datalist id="tickmarks">
+				<div class="form form-range">
+					<label>Line Width:</label>
+					<input type="range" form="controls" name="line-width" list="line-width__tickmarks" value="1" min="1" max="100" step="1">
+						<!--<datalist id="line-width__tickmarks">
 							<option value="1" label="0px">
 							<option value="10">
 							<option value="20">
@@ -57,25 +58,32 @@
 							<option value="90">
 							<option value="100" label="100px">
 						</datalist>-->
-					<span class="range-slider-value">1</span>
+					<span>1</span>
 				</div>
 
-					<!-- stroke style (checkbox for gradient) -->
+				<!-- stroke style (checkbox for gradient) -->
+				<div class="form form-color">
+					<label>Stroke Style:</label>
+					<input type="checkbox" form="controls" name="stroke-style__gradient" value="gradient">
+					<label>Gradient</label>
+					<input type="color" form="controls" name="stroke-style__color-1" value="#000000">
+					<input type="color" form="controls" name="stroke-style__color-2" value="#000000">
+				</div>
 
 				<div class="form form-select">
-					<p>Line Join</p>
-					<select name="line-join" form="controls" required>
+					<label>Line Join:</label>
+					<select form="controls" name="line-join" value="miter" size="1"required>
 						<option value="bevel">bevel</option>
 						<option value="round">round</option>
-						<option value="miter">miter</option>
+						<option value="miter" selected>miter</option>
 					</select>
 				</div>
 
 				<!-- miter limit (slider & text input) -->
-				<div class="form range-slider">
-					<p>Miter Limit</p>
-					<input class="range-slider-range" name="miter-limit" form="controls" type="range" list="tickmarks" min="1" max="100" step="1">
-						<!--<datalist id="tickmarks">
+				<div class="form form-range">
+					<label>Miter Limit:</label>
+					<input type="range" form="controls" name="miter-limit" list="miter-limit__tickmarks" value="10" min="1" max="100" step="1">
+						<!--<datalist id="miter-limit__tickmarks">
 							<option value="1" label="0px">
 							<option value="10">
 							<option value="20">
@@ -88,22 +96,22 @@
 							<option value="90">
 							<option value="100" label="100px">
 						</datalist>-->
-					<span class="range-slider-value">10</span>
+					<span>10</span>
 				</div>
 
 				<div class="form form-select">
-					<p>Line Cap</p>
-					<select name="line-cap" form="controls" required>
-						<option value="butt">butt</option>
+					<label>Line Cap:</label>
+					<select form="controls" name="line-cap" value="butt" size="1" required>
+						<option value="butt" selected>butt</option>
 						<option value="round">round</option>
 						<option value="square">square</option>
 					</select>
 				</div>
 
 				<div class="form form-select">
-					<p>Composite</p>
-					<select name="global-composite-operation" form="controls" required>
-						<option value="source-over">source-over</option>
+					<label>Composite:</label>
+					<select form="controls" name="global-composite-operation" value="source-over" size="1" required>
+						<option value="source-over" selected>source-over</option>
 						<option value="source-atop">source-atop</option>
 						<option value="source-in">source-in</option>
 						<option value="source-out">source-out</option>
@@ -116,6 +124,8 @@
 						<option value="xor">xor</option>
 					</select>
 				</div>
+
+				<!--reset button-->
 
 			</form>
 

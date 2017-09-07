@@ -1,8 +1,10 @@
+$controls-height: 45px;
+
 *,
 *:before,
 *:after {
 	box-sizing: border-box;
-	outline: 1px solid red;
+	// outline: 1px solid red;
 }
 
 html,
@@ -10,33 +12,50 @@ body {
 	margin: 0;
 }
 
-form#controls {
+form[id="controls"] {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: $controls-height;
+	padding-right: 20px;
+	background: lightgray;
 }
 
 .form {
 	display: flex;
-	// flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
+	padding-left: 20px
 }
 
-form p {
-	padding-left: 20px;
+.form * {
+	margin: 0 auto;
+}
+
+form label{
 	padding-right: 5px;
 }
-.range-slider-value {
+
+input[type="checkbox"] {
+	margin-right: 2px;
+}
+
+.form-range span {
 	display: inline-block;
 	position: relative;
-	width: 55px;
+	min-width: 45px;
 	height: 20px;
-	color: blue;
+	color: black;
 	line-height: 10px;
 	text-align: center;
 	border-radius: 5px;
-	background: red;
+	background: gray;
 	padding: 5px 10px;
 	margin-left: 8px;
 
@@ -47,7 +66,7 @@ form p {
 		width: 0;
 		height: 0;
 		border-top: 5px solid transparent;
-		border-right: 6px solid red;
+		border-right: 6px solid gray;
 		border-bottom: 5px solid transparent;
 		content: '';
 	}
