@@ -7,21 +7,30 @@ $controls-height: 45px;
 	// outline: 1px solid red;
 }
 
+html {
+	height: 100%;
+}
+
 html,
 body {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	align-content: stretch;
+
 	margin: 0;
+}
+
+body {
+	flex: 1;
 }
 
 form[id="controls"] {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-wrap: wrap;
 
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: $controls-height;
 	padding-right: 20px;
 	background: lightgray;
 }
@@ -30,8 +39,10 @@ form[id="controls"] {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	padding-left: 20px
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 20px;
+	border-bottom: 1px solid darkgray;
 }
 
 .form * {
@@ -44,6 +55,10 @@ form label{
 
 input[type="checkbox"] {
 	margin-right: 2px;
+}
+
+input[type="color"]:disabled {
+	opacity: 0.25;
 }
 
 .form-range span {
@@ -69,5 +84,15 @@ input[type="checkbox"] {
 		border-right: 6px solid gray;
 		border-bottom: 5px solid transparent;
 		content: '';
+	}
+}
+
+.draw {
+	flex: 1;
+}
+
+@media only screen and (max-width: 500px) {
+	.search-form {
+		max-width: 250px;
 	}
 }
