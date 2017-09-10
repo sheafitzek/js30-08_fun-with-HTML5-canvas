@@ -35,16 +35,16 @@
 				<div class="form form-select">
 					<!--<p>Context</p>-->
 					<label>Context:</label>
-					<select form="controls" name="context" value="2d" size="1" required>
+					<select form="controls" name="context" value="2d" size="1" onchange="app.getContext();" required>
 						<option value="2d">2d</option>
-						<option value="webgl">webgl</option>
+						<option value="webgl"disabled>webgl</option>
 					</select>
 				</div>
 
 				<!-- line width (slider & text input) -->
 				<div class="form form-range">
 					<label>Line Width:</label>
-					<input type="range" form="controls" name="line-width" list="line-width__tickmarks" value="1" min="1" max="100" step="1">
+					<input type="range" form="controls" name="line-width" list="line-width__tickmarks" value="1" min="1" max="100" step="1" onchange="app.getLineWidth();">
 						<!--<datalist id="line-width__tickmarks">
 							<option value="1" label="0px">
 							<option value="10">
@@ -64,15 +64,15 @@
 				<!-- stroke style (checkbox for gradient) -->
 				<div class="form form-color">
 					<label>Stroke Style:</label>
-					<input type="checkbox" form="controls" name="stroke-style__gradient" value="gradient">
+					<input type="checkbox" form="controls" name="stroke-style__gradient" value="gradient" onchange="app.getStrokeStyle();">
 					<label>Gradient</label>
-					<input type="color" form="controls" name="stroke-style__color-1" value="#000000">
-					<input type="color" form="controls" name="stroke-style__color-2" value="#000000" disabled>
+					<input type="color" form="controls" name="stroke-style__color-1" value="#000000" onchange="app.getStrokeStyle();">
+					<input type="color" form="controls" name="stroke-style__color-2" value="#000000" onchange="app.getStrokeStyle();" disabled>
 				</div>
 
 				<div class="form form-select">
 					<label>Line Join:</label>
-					<select form="controls" name="line-join" value="miter" size="1"required>
+					<select form="controls" name="line-join" value="miter" size="1" onchange="app.getLineJoin();" required>
 						<option value="bevel">bevel</option>
 						<option value="round">round</option>
 						<option value="miter" selected>miter</option>
@@ -82,7 +82,7 @@
 				<!-- miter limit (slider & text input) -->
 				<div class="form form-range">
 					<label>Miter Limit:</label>
-					<input type="range" form="controls" name="miter-limit" list="miter-limit__tickmarks" value="10" min="1" max="100" step="1">
+					<input type="range" form="controls" name="miter-limit" list="miter-limit__tickmarks" value="10" min="1" max="100" step="1" onchange="app.getMiterLimit();">
 						<!--<datalist id="miter-limit__tickmarks">
 							<option value="1" label="0px">
 							<option value="10">
@@ -101,7 +101,7 @@
 
 				<div class="form form-select">
 					<label>Line Cap:</label>
-					<select form="controls" name="line-cap" value="butt" size="1" required>
+					<select form="controls" name="line-cap" value="butt" size="1" onchange="app.getLineCap();" required>
 						<option value="butt" selected>butt</option>
 						<option value="round">round</option>
 						<option value="square">square</option>
@@ -110,7 +110,7 @@
 
 				<div class="form form-select">
 					<label>Composite:</label>
-					<select form="controls" name="global-composite-operation" value="source-over" size="1" required>
+					<select form="controls" name="global-composite-operation" value="source-over" size="1" onchange="app.getComposite();" required>
 						<option value="source-over" selected>source-over</option>
 						<option value="source-atop">source-atop</option>
 						<option value="source-in">source-in</option>

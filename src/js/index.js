@@ -37,7 +37,8 @@ const app = {
 	},
 
 	getCanvasContext() {
-		
+		const forms = [...document.forms];
+		const context = document.querySelector(`.controls [name="context"]`);
 	},
 
 	getLineWidth() {
@@ -45,7 +46,8 @@ const app = {
 	},
 
 	getStrokeStyle() {
-		
+		console.log(`form submitted`);
+		console.log(this);
 	},
 
 	getLineJoin() {
@@ -60,7 +62,7 @@ const app = {
 		
 	},
 
-	getGlobalCompositeOperation() {
+	getComposite() {
 		
 	},
 
