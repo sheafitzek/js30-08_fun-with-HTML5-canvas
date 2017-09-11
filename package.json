@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sheafitzek/js30-08_fun-with-HTML5-canvas/issues"
   },
-  "homepage": "https://github.com/sheafitzek/js30-08_fun-with-HTML5-canvas"
+  "homepage": "https://github.com/sheafitzek/js30-08_fun-with-HTML5-canvas",
+  "devDependencies": {
+    "gh-pages": "^1.0.0"
+  }
 }
