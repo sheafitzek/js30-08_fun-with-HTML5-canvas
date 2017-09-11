@@ -1,0 +1,91 @@
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+}
+
+html,
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	align-content: stretch;
+
+	margin: 0;
+}
+
+body {
+	flex: 1;
+}
+
+form[id="controls"] {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	flex-wrap: wrap;
+
+	padding-right: 20px;
+	background: lightgray;
+	border-bottom: 1px solid darkgray;
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 20px;
+}
+
+.form * {
+	margin: 0 auto;
+}
+
+form label{
+	padding-right: 5px;
+}
+
+input[type="checkbox"] {
+	margin-right: 2px;
+}
+
+input[type="color"]:disabled {
+	opacity: 0.25;
+}
+
+.form-range span {
+	display: inline-block;
+	position: relative;
+	min-width: 45px;
+	height: 20px;
+	color: black;
+	line-height: 10px;
+	text-align: center;
+	border-radius: 5px;
+	background: gray;
+	padding: 5px 10px;
+	margin-left: 8px;
+
+	&:after {
+		position: absolute;
+		top: 5px;
+		left: -5px;
+		width: 0;
+		height: 0;
+		border-top: 5px solid transparent;
+		border-right: 6px solid gray;
+		border-bottom: 5px solid transparent;
+		content: '';
+	}
+}
+
+.draw {
+	flex: 1;
+
+	cursor: crosshair;
+}

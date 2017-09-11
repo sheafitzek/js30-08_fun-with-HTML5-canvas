@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<title>Playing with HTML5 Canvas</title>
+		<meta name="description" content="A Drawing App Built on HTML5 Canvas">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="shortcut icon" type="image/x-icon" href="media/images/paint.ico" />
+
+		<link rel="stylesheet" href="css/index.css">
+
+	</head>
+
+	<body>
+
+		<form id="controls">
+
+			<div class="form form-bgColor">
+				<label>Background:</label>
+				<input type="color" form="controls" name="bg-color" value="#000000" onchange="app.getBgColor();">
+			</div>
+
+			<div class="form form-range">
+				<label>Line Width:</label>
+				<input type="range" form="controls" name="line-width" list="line-width__tickmarks" value="1" min="1" max="100" step="1" onchange="app.getLineWidth();">
+				<span>1</span>
+			</div>
+
+			<div class="form form-color">
+				<label>Stroke Style:</label>
+				<input type="color" form="controls" name="stroke-style" value="#000000" onchange="app.getStrokeStyle();">
+			</div>
+
+			<div class="form form-select">
+				<label>Line Join:</label>
+				<select form="controls" name="line-join" value="miter" size="1" onchange="app.getLineJoin();" required>
+					<option value="bevel">bevel</option>
+					<option value="round">round</option>
+					<option value="miter" selected>miter</option>
+				</select>
+			</div>
+
+			<div class="form form-range">
+				<label>Miter Limit:</label>
+				<input type="range" form="controls" name="miter-limit" list="miter-limit__tickmarks" value="10" min="1" max="100" step="1" onchange="app.getMiterLimit();">
+				<span>10</span>
+			</div>
+
+			<div class="form form-select">
+				<label>Line Cap:</label>
+				<select form="controls" name="line-cap" value="butt" size="1" onchange="app.getLineCap();" required>
+					<option value="butt" selected>butt</option>
+					<option value="round">round</option>
+					<option value="square">square</option>
+				</select>
+			</div>
+
+			<div class="form form-select">
+				<label>Composite:</label>
+				<select form="controls" name="global-composite-operation" value="source-over" size="1" onchange="app.getComposite();" required>
+					<option value="source-over" selected>source-over</option>
+					<option value="source-atop">source-atop</option>
+					<option value="source-in">source-in</option>
+					<option value="source-out">source-out</option>
+					<option value="destination-over">destination-over</option>
+					<option value="destination-atop">destination-atop</option>
+					<option value="destination-in">destination-in</option>
+					<option value="destination-out">destination-out</option>
+					<option value="lighter">lighter</option>
+					<option value="copy">copy</option>
+					<option value="xor">xor</option>
+				</select>
+			</div>
+
+		</form>
+
+		<canvas class="draw"></canvas>
+
+		<script type="text/javascript" src="js/index.js"></script>
+
+	</body>
+
+</html>
