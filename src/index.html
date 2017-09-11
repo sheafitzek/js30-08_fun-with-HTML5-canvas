@@ -11,136 +11,74 @@
 
 		<link rel="shortcut icon" type="image/x-icon" href="media/images/paint.ico" />
 
-		<!-- <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
-
-		<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bellefair|Rakkas|Share"> -->
-
-		<!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
-
 		<link rel="stylesheet" href="css/index.css">
 
 	</head>
 
 	<body>
 
-		<!--<header class="main-header">
-			<nav>
-			</nav>
-		</header>
+		<form id="controls">
 
-		<main class="main-grid">-->
+			<div class="form form-bgColor">
+				<label>Background:</label>
+				<input type="color" form="controls" name="bg-color" value="#000000" onchange="app.getBgColor();">
+			</div>
 
-			<form id="controls">
+			<div class="form form-range">
+				<label>Line Width:</label>
+				<input type="range" form="controls" name="line-width" list="line-width__tickmarks" value="1" min="1" max="100" step="1" onchange="app.getLineWidth();">
+				<span>1</span>
+			</div>
 
-				<div class="form form-select">
-					<!--<p>Context</p>-->
-					<label>Context:</label>
-					<select form="controls" name="context" value="2d" size="1" onchange="app.getContext();" required>
-						<option value="2d">2d</option>
-						<option value="webgl"disabled>webgl</option>
-					</select>
-				</div>
+			<div class="form form-color">
+				<label>Stroke Style:</label>
+				<input type="color" form="controls" name="stroke-style" value="#000000" onchange="app.getStrokeStyle();">
+			</div>
 
-				<!-- stroke style (checkbox for gradient) -->
-				<div class="form form-bgColor">
-					<label>Background:</label>
-					<input type="color" form="controls" name="bg-color" value="#000000" onchange="app.getBgColor();">
-				</div>
+			<div class="form form-select">
+				<label>Line Join:</label>
+				<select form="controls" name="line-join" value="miter" size="1" onchange="app.getLineJoin();" required>
+					<option value="bevel">bevel</option>
+					<option value="round">round</option>
+					<option value="miter" selected>miter</option>
+				</select>
+			</div>
 
-				<!-- line width (slider & text input) -->
-				<div class="form form-range">
-					<label>Line Width:</label>
-					<input type="range" form="controls" name="line-width" list="line-width__tickmarks" value="1" min="1" max="100" step="1" onchange="app.getLineWidth();">
-						<!--<datalist id="line-width__tickmarks">
-							<option value="1" label="0px">
-							<option value="10">
-							<option value="20">
-							<option value="30">
-							<option value="40">
-							<option value="50" label="50px">
-							<option value="60">
-							<option value="70">
-							<option value="80">
-							<option value="90">
-							<option value="100" label="100px">
-						</datalist>-->
-					<span>1</span>
-				</div>
+			<div class="form form-range">
+				<label>Miter Limit:</label>
+				<input type="range" form="controls" name="miter-limit" list="miter-limit__tickmarks" value="10" min="1" max="100" step="1" onchange="app.getMiterLimit();">
+				<span>10</span>
+			</div>
 
-				<!-- stroke style (checkbox for gradient) -->
-				<div class="form form-color">
-					<label>Stroke Style:</label>
-					<input type="checkbox" form="controls" name="stroke-style__gradient" value="gradient" onchange="app.getStrokeStyle();">
-					<label>Gradient</label>
-					<input type="color" form="controls" name="stroke-style__color-1" value="#000000" onchange="app.getStrokeStyle();">
-					<input type="color" form="controls" name="stroke-style__color-2" value="#000000" onchange="app.getStrokeStyle();" disabled>
-				</div>
+			<div class="form form-select">
+				<label>Line Cap:</label>
+				<select form="controls" name="line-cap" value="butt" size="1" onchange="app.getLineCap();" required>
+					<option value="butt" selected>butt</option>
+					<option value="round">round</option>
+					<option value="square">square</option>
+				</select>
+			</div>
 
-				<div class="form form-select">
-					<label>Line Join:</label>
-					<select form="controls" name="line-join" value="miter" size="1" onchange="app.getLineJoin();" required>
-						<option value="bevel">bevel</option>
-						<option value="round">round</option>
-						<option value="miter" selected>miter</option>
-					</select>
-				</div>
+			<div class="form form-select">
+				<label>Composite:</label>
+				<select form="controls" name="global-composite-operation" value="source-over" size="1" onchange="app.getComposite();" required>
+					<option value="source-over" selected>source-over</option>
+					<option value="source-atop">source-atop</option>
+					<option value="source-in">source-in</option>
+					<option value="source-out">source-out</option>
+					<option value="destination-over">destination-over</option>
+					<option value="destination-atop">destination-atop</option>
+					<option value="destination-in">destination-in</option>
+					<option value="destination-out">destination-out</option>
+					<option value="lighter">lighter</option>
+					<option value="copy">copy</option>
+					<option value="xor">xor</option>
+				</select>
+			</div>
 
-				<!-- miter limit (slider & text input) -->
-				<div class="form form-range">
-					<label>Miter Limit:</label>
-					<input type="range" form="controls" name="miter-limit" list="miter-limit__tickmarks" value="10" min="1" max="100" step="1" onchange="app.getMiterLimit();">
-						<!--<datalist id="miter-limit__tickmarks">
-							<option value="1" label="0px">
-							<option value="10">
-							<option value="20">
-							<option value="30">
-							<option value="40">
-							<option value="50" label="50px">
-							<option value="60">
-							<option value="70">
-							<option value="80">
-							<option value="90">
-							<option value="100" label="100px">
-						</datalist>-->
-					<span>10</span>
-				</div>
+		</form>
 
-				<div class="form form-select">
-					<label>Line Cap:</label>
-					<select form="controls" name="line-cap" value="butt" size="1" onchange="app.getLineCap();" required>
-						<option value="butt" selected>butt</option>
-						<option value="round">round</option>
-						<option value="square">square</option>
-					</select>
-				</div>
-
-				<div class="form form-select">
-					<label>Composite:</label>
-					<select form="controls" name="global-composite-operation" value="source-over" size="1" onchange="app.getComposite();" required>
-						<option value="source-over" selected>source-over</option>
-						<option value="source-atop">source-atop</option>
-						<option value="source-in">source-in</option>
-						<option value="source-out">source-out</option>
-						<option value="destination-over">destination-over</option>
-						<option value="destination-atop">destination-atop</option>
-						<option value="destination-in">destination-in</option>
-						<option value="destination-out">destination-out</option>
-						<option value="lighter">lighter</option>
-						<option value="copy">copy</option>
-						<option value="xor">xor</option>
-					</select>
-				</div>
-
-				<!--reset button-->
-
-			</form>
-
-			<canvas class="draw"></canvas>
-
-		<!--</main>
-
-		<footer class="main-footer">
-		</footer>-->
+		<canvas class="draw"></canvas>
 
 		<script type="text/javascript" src="js/index.js"></script>
 

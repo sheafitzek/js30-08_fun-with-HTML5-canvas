@@ -1,10 +1,7 @@
-$controls-height: 45px;
-
 *,
 *:before,
 *:after {
 	box-sizing: border-box;
-	// outline: 1px solid red;
 }
 
 html {
@@ -28,11 +25,12 @@ body {
 form[id="controls"] {
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: stretch;
 	flex-wrap: wrap;
 
 	padding-right: 20px;
 	background: lightgray;
+	border-bottom: 1px solid darkgray;
 }
 
 .form {
@@ -42,7 +40,6 @@ form[id="controls"] {
 	padding-top: 3px;
 	padding-bottom: 3px;
 	padding-left: 20px;
-	border-bottom: 1px solid darkgray;
 }
 
 .form * {
@@ -91,10 +88,4 @@ input[type="color"]:disabled {
 	flex: 1;
 
 	cursor: crosshair;
-}
-
-@media only screen and (max-width: 500px) {
-	.search-form {
-		max-width: 250px;
-	}
 }

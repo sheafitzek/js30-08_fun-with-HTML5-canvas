@@ -14,62 +14,54 @@ const app = {
 		});
 	},
 
-	getCanvasContext() {
-		// const forms = [...document.forms];
-		const context = document.querySelector(`select[name="context"]`);
-
-		app.canvasProps.context = context.value;
-	},
-
 	getBgColor() {
+		const canvas = document.querySelector(`.draw`);
 		const bgColor = document.querySelector(`input[name="bg-color"]`);
 
 		app.canvasProps.bgColor = bgColor.value;
+		canvas.style.background = app.canvasProps.bgColor;
 	},
 
 	getLineWidth() {
 		const lineWidth = document.querySelector(`input[name="line-width"]`);
 
 		app.canvasProps.lineWidth = lineWidth.value;
-		// app.setCanvas();
+		app.setCanvasProps(app.ctx);
 	},
 
 	getStrokeStyle() {
-		const strokeStyleGradient = document.querySelector(`input[name="stroke-style__gradient"]`);
-		const strokeStyleColor1 = document.querySelector(`input[name="stroke-style__color-1"]`);
-		const strokeStyleColor2 = document.querySelector(`input[name="stroke-style__color-2"]`);
+		const strokeStyle = document.querySelector(`input[name="stroke-style"]`);
 
-		strokeStyleGradient.checked
-			? strokeStyleColor2.disabled = false
-			: strokeStyleColor2.disabled = true;
-
-		app.canvasProps.strokeStyle = !strokeStyleGradient.checked
-			? strokeStyleColor1.value
-			: `${strokeStyleColor1.value}, ${strokeStyleColor2.value}`;
+		app.canvasProps.strokeStyle = strokeStyle.value;
+		app.setCanvasProps(app.ctx);
 	},
 
 	getLineJoin() {
 		const lineJoin = document.querySelector(`select[name="line-join"]`);
 
 		app.canvasProps.lineJoin = lineJoin.value;
+		app.setCanvasProps(app.ctx);
 	},
 
 	getMiterLimit() {
 		const miterLimit = document.querySelector(`input[name="miter-limit"]`);
 
 		app.canvasProps.miterLimit = miterLimit.value;
+		app.setCanvasProps(app.ctx);
 	},
 
 	getLineCap() {
 		const lineCap = document.querySelector(`select[name="line-cap"]`);
 
 		app.canvasProps.lineCap = lineCap.value;
+		app.setCanvasProps(app.ctx);
 	},
 
 	getComposite() {
-		const getComposite = document.querySelector(`select[name="global-composite-operation"]`);
+		const composite = document.querySelector(`select[name="global-composite-operation"]`);
 
-		app.canvasProps.getComposite = getComposite.value;
+		app.canvasProps.composite = composite.value;
+		app.setCanvasProps(app.ctx);
 	},
 
 	canvasProps: {
@@ -99,7 +91,7 @@ const app = {
 		ctx.lineJoin = app.canvasProps.lineJoin;
 		ctx.miterLimit = app.canvasProps.miterLimit;
 		ctx.lineCap = app.canvasProps.lineCap;
-		ctx.globalCompositeOperation = app.canvasProps.composite;
+		ctx.composite = app.canvasProps.composite;
 	},
 
 	setCoordinates(e, rect, canvas) {
@@ -107,8 +99,8 @@ const app = {
 		app.canvasCoordinates.mouseY = Math.round((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
 
 		if (e.touches) {
-			app.canvasCoordinates.touchX = Math.round(e.touches[0].pageX - e.touches[0].target.offsetLeft);
-			app.canvasCoordinates.touchY = Math.round(e.touches[0].pageY - e.touches[0].target.offsetTop);
+			app.canvasCoordinates.touchX = Math.round(e.targetTouches[0].pageX - e.targetTouches[0].target.offsetLeft);
+			app.canvasCoordinates.touchY = Math.round(e.targetTouches[0].pageY - e.targetTouches[0].target.offsetTop);
 		}
 
 		app.canvasCoordinates.lastX = e.touches
@@ -119,42 +111,35 @@ const app = {
 			: app.canvasCoordinates.mouseY;
 	},
 
+	ctx: document.querySelector(`.draw`).getContext(`2d`),
+
 	setCanvas() {
 		const canvas = document.querySelector(`.draw`);
-		const rect = canvas.getBoundingClientRect();
+		const canvasSize = canvas.getBoundingClientRect();
 
-		canvas.setAttribute(`width`, `${rect.width}`);
-		canvas.setAttribute(`height`, `${rect.height}`);
+		canvas.setAttribute(`width`, `${canvasSize.width}`);
+		canvas.setAttribute(`height`, `${canvasSize.height}`);
 
-		const ctx = canvas.getContext(`${app.canvasProps.context}`);
-
-		app.setCanvasProps(ctx);
-
-		// ctx.lineWidth = app.canvasProps.lineWidth;
-		// ctx.strokeStyle = app.canvasProps.strokeStyle;
-		// ctx.lineJoin = app.canvasProps.lineJoin;
-		// ctx.miterLimit = app.canvasProps.miterLimit;
-		// ctx.lineCap = app.canvasProps.lineCap;
-		// ctx.globalCompositeOperation = app.canvasProps.composite;
+		app.setCanvasProps(app.ctx);
 
 		function draw(e) {
 			if (!app.canvasCoordinates.isDrawing) return;
-			const lineToX = e.offsetX || e.targetTouches[0].pageX - rect.left;
-			const lineToY = e.offsetY || e.targetTouches[0].pageY - rect.top;
+			const lineToX = e.offsetX || e.targetTouches[0].pageX - canvasSize.left;
+			const lineToY = e.offsetY || e.targetTouches[0].pageY - canvasSize.top;
 
-			ctx.beginPath();
-			ctx.moveTo(app.canvasCoordinates.lastX, app.canvasCoordinates.lastY);
-			ctx.lineTo(lineToX, lineToY);
-			ctx.stroke();
+			app.ctx.beginPath();
+			app.ctx.moveTo(app.canvasCoordinates.lastX, app.canvasCoordinates.lastY);
+			app.ctx.lineTo(lineToX, lineToY);
+			app.ctx.stroke();
 
-			app.setCoordinates(e, rect, canvas);
+			app.setCoordinates(e, canvasSize, canvas);
 		}
 
 		[`mousedown`, `touchstart`].forEach((e)=> {
 			canvas.addEventListener(e, ()=> {
 				app.canvasCoordinates.isDrawing = true;
 
-				app.setCoordinates(e, rect, canvas);
+				app.setCoordinates(e, canvasSize, canvas);
 			}, {passive: true});
 		});
 
@@ -165,10 +150,6 @@ const app = {
 		[`mouseup`, `mouseout`, `touchend`, `touchcancel`].forEach((e)=> {
 			canvas.addEventListener(e, ()=> app.canvasCoordinates.isDrawing = false);
 		});
-	},
-
-	submitForm() {
-		
 	},
 
 	onloadFunction() {
