@@ -1,26 +1,4 @@
 const app = {
-	// rangeSlider() {
-	// 	const ranges = [...document.querySelectorAll(`.form-range`)];
-	// 	const sliders = [...document.querySelectorAll(`.form-range__slider`)];
-	// 	const values = [...document.querySelectorAll(`.form-range__slider-value`)];
-
-	// 	ranges.forEach(()=> {
-	// 		values.forEach((value)=> {
-	// 			const prevVal = value.previousElementSibling.value;
-
-	// 			value.innerHTML = prevVal;
-	// 		});
-
-	// 		sliders.forEach((slider)=> {
-	// 			addEventListener(`input`, ()=> {
-	// 				const nextVal = slider.nextElementSibling;
-
-	// 				nextVal.innerHTML = slider.value;
-	// 			});
-	// 		});
-	// 	});
-	// },
-
 	rangeSlider() {
 		const ranges = [...document.querySelectorAll(`.form-range`)];
 
@@ -37,42 +15,109 @@ const app = {
 	},
 
 	getCanvasContext() {
-		const forms = [...document.forms];
-		const context = document.querySelector(`.controls [name="context"]`);
+		// const forms = [...document.forms];
+		const context = document.querySelector(`select[name="context"]`);
+
+		app.canvasProps.context = context.value;
+	},
+
+	getBgColor() {
+		const bgColor = document.querySelector(`input[name="bg-color"]`);
+
+		app.canvasProps.bgColor = bgColor.value;
 	},
 
 	getLineWidth() {
-		
+		const lineWidth = document.querySelector(`input[name="line-width"]`);
+
+		app.canvasProps.lineWidth = lineWidth.value;
+		// app.setCanvas();
 	},
 
 	getStrokeStyle() {
-		console.log(`form submitted`);
-		console.log(this);
+		const strokeStyleGradient = document.querySelector(`input[name="stroke-style__gradient"]`);
+		const strokeStyleColor1 = document.querySelector(`input[name="stroke-style__color-1"]`);
+		const strokeStyleColor2 = document.querySelector(`input[name="stroke-style__color-2"]`);
+
+		strokeStyleGradient.checked
+			? strokeStyleColor2.disabled = false
+			: strokeStyleColor2.disabled = true;
+
+		app.canvasProps.strokeStyle = !strokeStyleGradient.checked
+			? strokeStyleColor1.value
+			: `${strokeStyleColor1.value}, ${strokeStyleColor2.value}`;
 	},
 
 	getLineJoin() {
-		
+		const lineJoin = document.querySelector(`select[name="line-join"]`);
+
+		app.canvasProps.lineJoin = lineJoin.value;
 	},
 
 	getMiterLimit() {
-		
+		const miterLimit = document.querySelector(`input[name="miter-limit"]`);
+
+		app.canvasProps.miterLimit = miterLimit.value;
 	},
 
 	getLineCap() {
-		
+		const lineCap = document.querySelector(`select[name="line-cap"]`);
+
+		app.canvasProps.lineCap = lineCap.value;
 	},
 
 	getComposite() {
-		
+		const getComposite = document.querySelector(`select[name="global-composite-operation"]`);
+
+		app.canvasProps.getComposite = getComposite.value;
 	},
 
-	// setPosition(e, canvas, rect) {
-	// 	mouseX = ~~((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
-	// 	mouseY = ~~((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
+	canvasProps: {
+		context: `2d`,
+		bgColor: `#ffffff`,
+		lineWidth: 1,
+		strokeStyle: `#000000`,
+		lineJoin: `miter`,
+		miterLimit: 10,
+		lineCap: `butt`,
+		composite: `source-over`,
+	},
 
-	// 	// const touchX = ~~((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
-	// 	// const touchY = ~~((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
-	// },
+	canvasCoordinates: {
+		isDrawing: false,
+		mouseX: 0,
+		mouseY: 0,
+		touchX: 0,
+		touchY: 0,
+		lastX: 0,
+		lastY: 0,
+	},
+
+	setCanvasProps(ctx) {
+		ctx.lineWidth = app.canvasProps.lineWidth;
+		ctx.strokeStyle = app.canvasProps.strokeStyle;
+		ctx.lineJoin = app.canvasProps.lineJoin;
+		ctx.miterLimit = app.canvasProps.miterLimit;
+		ctx.lineCap = app.canvasProps.lineCap;
+		ctx.globalCompositeOperation = app.canvasProps.composite;
+	},
+
+	setCoordinates(e, rect, canvas) {
+		app.canvasCoordinates.mouseX = Math.round((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
+		app.canvasCoordinates.mouseY = Math.round((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
+
+		if (e.touches) {
+			app.canvasCoordinates.touchX = Math.round(e.touches[0].pageX - e.touches[0].target.offsetLeft);
+			app.canvasCoordinates.touchY = Math.round(e.touches[0].pageY - e.touches[0].target.offsetTop);
+		}
+
+		app.canvasCoordinates.lastX = e.touches
+			? app.canvasCoordinates.touchX
+			: app.canvasCoordinates.mouseX;
+		app.canvasCoordinates.lastY = e.touches
+			? app.canvasCoordinates.touchY
+			: app.canvasCoordinates.mouseY;
+	},
 
 	setCanvas() {
 		const canvas = document.querySelector(`.draw`);
@@ -81,68 +126,35 @@ const app = {
 		canvas.setAttribute(`width`, `${rect.width}`);
 		canvas.setAttribute(`height`, `${rect.height}`);
 
-		let mouseX;
-		let mouseY;
-		let touchX;
-		let touchY;
-		let lastX;
-		let lastY;
+		const ctx = canvas.getContext(`${app.canvasProps.context}`);
 
-		const ctx = canvas.getContext(`2d`);
+		app.setCanvasProps(ctx);
 
-		ctx.lineWidth = 1;
-		ctx.strokeStyle = `#000000`;
-		ctx.lineJoin = `miter`;
-		ctx.miterLimit = 10;
-		ctx.lineCap = `butt`;
-		ctx.globalCompositeOperation = `source-over`;
-
-		let isDrawing = false;
+		// ctx.lineWidth = app.canvasProps.lineWidth;
+		// ctx.strokeStyle = app.canvasProps.strokeStyle;
+		// ctx.lineJoin = app.canvasProps.lineJoin;
+		// ctx.miterLimit = app.canvasProps.miterLimit;
+		// ctx.lineCap = app.canvasProps.lineCap;
+		// ctx.globalCompositeOperation = app.canvasProps.composite;
 
 		function draw(e) {
-			if (!isDrawing) return;
-			// console.log(e);
+			if (!app.canvasCoordinates.isDrawing) return;
+			const lineToX = e.offsetX || e.targetTouches[0].pageX - rect.left;
+			const lineToY = e.offsetY || e.targetTouches[0].pageY - rect.top;
 
 			ctx.beginPath();
-			ctx.moveTo(lastX, lastY);
-			ctx.lineTo(e.offsetX || e.targetTouches[0].pageX - rect.left, e.offsetY || e.targetTouches[0].pageY - rect.top);
+			ctx.moveTo(app.canvasCoordinates.lastX, app.canvasCoordinates.lastY);
+			ctx.lineTo(lineToX, lineToY);
 			ctx.stroke();
 
-			mouseX = Math.round((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
-			mouseY = Math.round((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
-
-			if (e.type === `touchmove`) {
-				touchX = Math.round(e.touches[0].pageX - e.touches[0].target.offsetLeft);
-				touchY = Math.round(e.touches[0].pageY - e.touches[0].target.offsetTop);
-			}
-
-			lastX = e.touches
-				? touchX
-				: mouseX;
-			lastY = e.touches
-				? touchY
-				: mouseY;
+			app.setCoordinates(e, rect, canvas);
 		}
 
 		[`mousedown`, `touchstart`].forEach((e)=> {
 			canvas.addEventListener(e, ()=> {
-				isDrawing = true;
-				console.log(e);
+				app.canvasCoordinates.isDrawing = true;
 
-				mouseX = Math.round((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width);
-				mouseY = Math.round((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height);
-
-				if (e.touches) {
-					touchX = Math.round(e.touches[0].pageX - e.touches[0].target.offsetLeft);
-					touchY = Math.round(e.touches[0].pageY - e.touches[0].target.offsetTop);
-				}
-
-				lastX = e.touches
-					? touchX
-					: mouseX;
-				lastY = e.touches
-					? touchY
-					: mouseY;
+				app.setCoordinates(e, rect, canvas);
 			}, {passive: true});
 		});
 
@@ -151,7 +163,7 @@ const app = {
 		});
 
 		[`mouseup`, `mouseout`, `touchend`, `touchcancel`].forEach((e)=> {
-			canvas.addEventListener(e, ()=> isDrawing = false);
+			canvas.addEventListener(e, ()=> app.canvasCoordinates.isDrawing = false);
 		});
 	},
 
@@ -166,11 +178,3 @@ const app = {
 };
 
 window.onload = app.onloadFunction;
-
-// context (2d, webgl)
-// ctx.lineWidth (px)
-// ctx.strokeStyle (color, gradient, pattern)
-// ctx.lineJoin (bevel, round, miter)
-// ctx.miterLimit (px)
-// ctx.lineCap (butt, round, square)
-// ctx.globalCompositeOperation (source-over, source-atop, source-in, source-out, destination-over, destination-atop, destination-in, destination-out, lighter, copy, xor)
